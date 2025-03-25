@@ -1,0 +1,18 @@
+diploiVersion: v1.0
+type: component
+name: SvelteKit
+description: Official SvelteKit component for Diploi
+
+hosts:
+  - name: SvelteKit
+    identifier: app
+    urlFormat: '[label].[default-domain]'
+
+logs:
+  - name: SvelteKit Log
+    type: log
+    labelSelector: app=app
+
+images:
+  - identifier: app
+    prebuildImage: ghcr.io/diploi/component-sveltekit:[tag]
