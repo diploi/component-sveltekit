@@ -2,6 +2,10 @@
 
 # SvelteKit Component for Diploi
 
+[![launch with diploi badge](https://diploi.com/launch.svg)](https://diploi.com/component/sveltekit)
+[![component on diploi badge](https://diploi.com/component.svg)](https://diploi.com/component/sveltekit)
+[![latest tag badge](https://badgen.net/github/tag/diploi/component-sveltekit)](https://diploi.com/component/sveltekit)
+
 Launch a demo for free
 https://diploi.com/component/sveltekit
 
