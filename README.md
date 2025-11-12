@@ -33,3 +33,8 @@ Will run `npm install` when component is first initialized, and `npm run dev` wh
 ### Production
 
 Will build a production ready image. Image runs `npm install` & `npm build` when being created. Once the image runs, `npm start` is called.
+
+## Links
+
+- [Adding SvelteKit to a project](https://docs.diploi.com/building/components/sveltekit)
+- [SvelteKit docs](https://svelte.dev/tutorial/kit/introducing-sveltekit)
