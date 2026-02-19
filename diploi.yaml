@@ -3,16 +3,13 @@ type: component
 name: SvelteKit
 description: Official SvelteKit component for Diploi
 
+supportsAdditionalHosts: { serviceName: 'app'}
+
 hosts:
   - name: SvelteKit
     identifier: app
-    urlFormat: '[label].[default-domain]'
-
-logs:
-  - name: SvelteKit Log
-    type: log
-    labelSelector: app=app
+    port: 3000
 
 images:
   - identifier: app
-    prebuildImage: ghcr.io/diploi/component-sveltekit:[tag]
+    prebuildImage: public.ecr.aws/p8t2q7f4/diploi/component-sveltekit:[tag]
