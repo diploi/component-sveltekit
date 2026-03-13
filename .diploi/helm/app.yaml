@@ -40,6 +40,11 @@ spec:
           imagePullPolicy: Always
           command: ['npm', 'install']
           workingDir: /app{{ .Values.folder }}
+          env:
+            - name: NODE_ENV
+              value: development
+            - name: __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS
+              value: .diploi.me
           volumeMounts:
             - name: app-mount
               mountPath: /app
@@ -52,8 +57,24 @@ spec:
             - containerPort: 3000
           {{- if eq .Values.stage "development" }}
           workingDir: /app{{ .Values.folder }}
+          {{- with .Values.containerCommands.developmentStart }}
+          command:
+            - /bin/sh
+            - -c
+            - "{{ . }}"
+          {{- end }}
+          {{- else }}
+          {{- with .Values.containerCommands.productionStart }}
+          command:
+            - /bin/sh
+            - -c
+            - "{{ . }}"
+          {{- end }}
+          {{- end }}
           {{- end }}
           env:
+            - name: __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS
+              value: .diploi.me
             {{- range .Values.env }}
             - name: {{ .identifier }}
               value: {{ .value | quote }}
