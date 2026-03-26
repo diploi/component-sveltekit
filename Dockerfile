@@ -11,10 +11,17 @@ WORKDIR ${FOLDER}
 
 # Install dependencies based on the preferred package manager
 RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
+  if [ -f yarn.lock ]; then \
+  yarn install --frozen-lockfile || yarn install; \
+  elif [ -f package-lock.json ]; then \
+  npm ci || npm install; \
+  elif [ -f pnpm-lock.yaml ]; then \
+  pnpm install --frozen-lockfile || pnpm install; \
+  elif [ -f package.json ]; then \
+  echo "Lockfile not found. Falling back to npm install (non-deterministic install)."; \
+  npm install; \
+  else \
+  echo "No package manifest found. Skipping install."; \
   fi
 
 # Rebuild the source code only when needed
@@ -26,9 +33,11 @@ COPY --from=deps ${FOLDER}/node_modules ./node_modules
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
-  else echo "Lockfile not found." && exit 1; \
+  elif [ -f pnpm-lock.yaml ]; then pnpm run build; \
+  elif [ -f package.json ]; then npm run build; \
+  else echo "No package manifest found. Skipping build step."; \
   fi
+
 
 # Production image, copy all the files and run "npm start"
 FROM base AS runner
