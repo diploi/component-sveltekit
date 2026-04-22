@@ -8,6 +8,9 @@ RUN corepack enable
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
+#Install bun
+COPY --from=oven/bun:1.3.11-alpine /usr/local/bin/bun /usr/local/bin/bun
+
 # This will be set by the GitHub action to the folder containing this component.
 ARG FOLDER=/app
 
