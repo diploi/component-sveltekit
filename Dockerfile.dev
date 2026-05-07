@@ -10,6 +10,9 @@ RUN corepack enable
 # Setup PNPM
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PNPM_HOME/bin:$PATH"
+# Apply PNPM settings to be consistent with devcontainer
+ENV NPM_CONFIG_STORE_DIR=/home/codespace/.pnpm-store
+ENV NPM_CONFIG_NODE_LINKER=hoisted
 RUN mkdir -p /home/codespace/.pnpm-store /pnpm/bin \
   && chown -R 1000:1000 /home/codespace/.pnpm-store /pnpm
 
@@ -22,10 +25,6 @@ WORKDIR ${FOLDER}
 ENV NODE_ENV=development
 
 USER 1000:1000
-
-# Apply PNPM settings to be consistent with devcontainer
-RUN pnpm config set node-linker hoisted --global \
-  && pnpm config set store-dir /home/codespace/.pnpm-store --global
 
 EXPOSE 3000
 ENV PORT=3000
