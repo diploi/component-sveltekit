@@ -9,8 +9,8 @@ RUN corepack enable
 
 # Setup PNPM
 ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN mkdir -p /home/codespace/.pnpm-store /pnpm \
+ENV PATH="$PNPM_HOME:$PNPM_HOME/bin:$PATH"
+RUN mkdir -p /home/codespace/.pnpm-store /pnpm/bin \
   && chown -R 1000:1000 /home/codespace/.pnpm-store /pnpm
 
 #Install Bun
